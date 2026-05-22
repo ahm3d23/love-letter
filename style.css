@@ -6,21 +6,18 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  min-height: 100dvh;
-  background: linear-gradient(145deg, #0f0516, #1a0a2e, #0f0516);
-  background-attachment: fixed;
   font-family: "Caveat", cursive;
   color: #2c1810;
-  overflow: hidden;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
+  background: linear-gradient(145deg, #0f0516, #1a0a2e, #0f0516);
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* ── Envelope ── */
-.envelope-scene {
+/* ── Envelope section ── */
+.envelope-section {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,12 +26,23 @@ body {
   padding: 20px;
   padding-top: calc(20px + env(safe-area-inset-top, 0px));
   padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  transition: opacity 0.6s ease, max-height 0.6s ease, padding 0.6s ease;
+  overflow: hidden;
+}
+
+.envelope-section.hidden {
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+  min-height: 0;
+  pointer-events: none;
 }
 
 .envelope {
   position: relative;
   width: 320px;
-  height: 220px;
+  max-width: 85vw;
+  aspect-ratio: 320 / 220;
   background: linear-gradient(135deg, #fce8d0, #f5dcc0);
   border-radius: 12px;
   box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(255,107,157,0.1);
@@ -42,39 +50,31 @@ body {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.envelope:hover {
-  transform: scale(1.03);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 60px rgba(255,107,157,0.15);
+.envelope:active {
+  transform: scale(0.97);
 }
 
 .envelope.opened {
-  animation: openEnvelope 0.8s ease forwards;
+  animation: openEnvelope 0.7s ease forwards;
 }
 
 @keyframes openEnvelope {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.05) translateY(-20px); opacity: 0.8; }
-  100% { transform: scale(0.8) translateY(60px); opacity: 0; }
+  100% { transform: scale(0.8) translateY(40px); opacity: 0; }
 }
 
-/* Flap */
 .flap {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 110px;
+  height: 52%;
   background: linear-gradient(135deg, #f5dcc0, #e8c8a8);
   border-radius: 12px 12px 0 0;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transition: all 0.3s ease;
 }
 
-.envelope:hover .flap {
-  background: linear-gradient(135deg, #f0d4b0, #e0bc98);
-}
-
-/* Seal */
 .seal {
   position: absolute;
   top: 50%;
@@ -90,71 +90,56 @@ body {
   font-size: 24px;
   box-shadow: 0 4px 20px rgba(255,77,109,0.4);
   z-index: 2;
-  transition: transform 0.3s ease;
-}
-
-.envelope:hover .seal {
-  transform: translate(-50%, -50%) scale(1.1);
+  pointer-events: none;
 }
 
 .envelope-label {
   position: absolute;
-  bottom: 30px;
+  bottom: 18%;
   left: 50%;
   transform: translateX(-50%);
   font-family: "Great Vibes", cursive;
-  font-size: 22px;
-  color: rgba(44,24,16,0.4);
+  font-size: clamp(18px, 4vw, 24px);
+  color: rgba(44,24,16,0.35);
   letter-spacing: 2px;
   animation: pulse 2s ease-in-out infinite;
+  white-space: nowrap;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
 }
 
-/* ── Letter ── */
-.letter-wrapper {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 30px 20px;
+/* ── Letter section ── */
+.letter-section {
+  padding: 30px 16px;
   padding-top: calc(30px + env(safe-area-inset-top, 0px));
   padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  display: none;
 }
 
-.letter-wrapper.visible {
-  opacity: 1;
-  pointer-events: auto;
+.letter-section.visible {
+  display: block;
+  animation: letterIn 0.8s ease both;
+}
+
+@keyframes letterIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .paper {
   max-width: 700px;
   width: 100%;
+  margin: 0 auto;
   background: linear-gradient(160deg, #fdf8f0, #f5edd8, #fdf8f0);
   border-radius: 20px;
-  padding: 50px 45px;
+  padding: 40px 35px;
   box-shadow: 0 40px 120px rgba(0,0,0,0.5), 0 0 60px rgba(255,107,157,0.08);
   position: relative;
-  margin: 20px auto;
-  animation: letterIn 1s ease both;
 }
 
-@keyframes letterIn {
-  from { opacity: 0; transform: translateY(40px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* Paper lines effect */
 .paper::before {
   content: "";
   position: absolute;
@@ -164,8 +149,8 @@ body {
     0deg,
     transparent,
     transparent 38px,
-    rgba(200, 180, 160, 0.12) 38px,
-    rgba(200, 180, 160, 0.12) 39px
+    rgba(200, 180, 160, 0.1) 38px,
+    rgba(200, 180, 160, 0.1) 39px
   );
   pointer-events: none;
 }
@@ -177,25 +162,23 @@ body {
 
 .date-top {
   text-align: right;
-  font-size: 20px;
-  color: rgba(44,24,16,0.4);
-  margin-bottom: 30px;
-  font-weight: 400;
+  font-size: clamp(18px, 3.5vw, 22px);
+  color: rgba(44,24,16,0.35);
+  margin-bottom: 24px;
 }
 
 .greeting {
-  font-size: 32px;
+  font-size: clamp(28px, 5vw, 36px);
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   color: #2c1810;
 }
 
 .letter-content p {
-  font-size: 22px;
+  font-size: clamp(19px, 3.5vw, 24px);
   line-height: 1.7;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   color: rgba(44,24,16,0.85);
-  font-weight: 400;
 }
 
 .highlight {
@@ -204,64 +187,44 @@ body {
 }
 
 .signature {
-  margin-top: 30px !important;
+  margin-top: 28px !important;
   font-family: "Great Vibes", cursive;
-  font-size: 30px !important;
+  font-size: clamp(26px, 5vw, 34px) !important;
   color: #2c1810 !important;
   text-align: right;
   line-height: 1.4 !important;
 }
 
 .postscript {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 2px solid rgba(255,77,109,0.15);
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 2px solid rgba(255,77,109,0.12);
 }
 
 .postscript p {
-  font-size: 20px !important;
-  color: rgba(44,24,16,0.5) !important;
+  font-size: clamp(17px, 3vw, 21px) !important;
+  color: rgba(44,24,16,0.45) !important;
   font-style: italic;
 }
 
 /* ── Put back button ── */
 .put-back {
   display: block;
-  margin: 40px auto 0;
+  margin: 36px auto 0;
   padding: 12px 28px;
   border: 1px solid rgba(255,77,109,0.2);
   border-radius: 999px;
   background: rgba(255,77,109,0.06);
   color: rgba(44,24,16,0.5);
   font-family: "Caveat", cursive;
-  font-size: 18px;
+  font-size: clamp(17px, 3vw, 20px);
   cursor: pointer;
   transition: all 0.3s ease;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.put-back:hover {
-  background: rgba(255,77,109,0.12);
-  border-color: rgba(255,77,109,0.35);
-  color: rgba(44,24,16,0.7);
-}
-
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .envelope {
-    width: 260px;
-    height: 180px;
-  }
-
-  .paper {
-    padding: 35px 25px;
-  }
-
-  .letter-content p {
-    font-size: 19px;
-  }
-
-  .greeting {
-    font-size: 28px;
-  }
+.put-back:active {
+  background: rgba(255,77,109,0.15);
+  transform: scale(0.96);
 }
