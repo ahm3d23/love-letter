@@ -1,11 +1,22 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+  background: #0f0516;
+  min-height: 100%;
+}
+
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background: linear-gradient(145deg, #0f0516, #1a0a2e, #0f0516);
+  background-attachment: fixed;
   font-family: "Caveat", cursive;
   color: #2c1810;
   overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* ── Envelope ── */
@@ -14,7 +25,10 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
 }
 
 .envelope {
@@ -105,13 +119,17 @@ body {
   position: fixed;
   inset: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 30px 20px;
+  padding-top: calc(30px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
   opacity: 0;
   pointer-events: none;
   transition: opacity 1s ease;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .letter-wrapper.visible {

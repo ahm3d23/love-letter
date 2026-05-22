@@ -74,14 +74,12 @@
       setTimeout(() => {
         envelope.style.display = "none";
         letter.classList.add("visible");
-        document.body.style.overflow = "auto";
       }, 800);
     });
 
     putBack.addEventListener("click", () => {
       letter.classList.remove("visible");
       letter.style.opacity = "0";
-      document.body.style.overflow = "hidden";
       envelope.style.display = "";
       envelope.classList.remove("opened");
       envelope.style.pointerEvents = "";
