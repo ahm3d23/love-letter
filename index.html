@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>A Letter for Reem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="envelope-scene">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="seal">❤️</div>
+      <p class="envelope-label">Open me</p>
+    </div>
+  </div>
+
+  <div class="letter-wrapper" id="letter">
+    <div class="paper">
+      <div class="letter-content">
+        <p class="date-top">May 22, 2026</p>
+
+        <p class="greeting">My Dearest Reem,</p>
+
+        <p>
+          I've tried writing this a hundred times in my head, but words have a way of failing when it comes to you. So I'll just write what's true.
+        </p>
+
+        <p>
+          You came into my life through a comment on a reel — something so small, so random, that it could've been nothing. But it wasn't nothing. It was <span class="highlight">everything</span>.
+        </p>
+
+        <p>
+          I love the way you think. I love how your mind works in ways I can't always predict. I love that you're a little unhinged, a little chaotic, and <span class="highlight">completely yourself</span> — no apologies, no filters. It's the most beautiful thing I've ever seen.
+        </p>
+
+        <p>
+          You were my first drawing. And you'll be my last. Every sketch I make, every line I draw — somehow it always leads back to you. You're my muse, even when you don't know it.
+        </p>
+
+        <p>
+          I love how you laugh at things you shouldn't laugh at. I love the random voice notes and the unhinged texts. I love that I never know what you're going to say next. Life with you is like a song that keeps changing tempo — and I can't stop dancing to it.
+        </p>
+
+        <p>
+          So this is my birthday letter to you. Not wrapped in fancy paper, but wrapped in everything I feel. You deserve the world, Reem. And I'm going to spend as much time as I can trying to give it to you.
+        </p>
+
+        <p class="signature">
+          Forever yours,<br />
+          Ahmed ❤️
+        </p>
+
+        <div class="postscript">
+          <p>P.S. — Stay crazy. It's my favorite thing about you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+
+    envelope.addEventListener("click", () => {
+      envelope.classList.add("opened");
+      setTimeout(() => {
+        envelope.style.display = "none";
+        letter.classList.add("visible");
+        document.body.style.overflow = "auto";
+      }, 800);
+    });
+  </script>
+</body>
+</html>
