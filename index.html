@@ -57,6 +57,8 @@
         <div class="postscript">
           <p>P.S. — Stay crazy. It's my favorite thing about you.</p>
         </div>
+
+        <button class="put-back" id="putBack">Put back in envelope</button>
       </div>
     </div>
   </div>
@@ -64,14 +66,41 @@
   <script>
     const envelope = document.getElementById("envelope");
     const letter = document.getElementById("letter");
+    const putBack = document.getElementById("putBack");
 
     envelope.addEventListener("click", () => {
       envelope.classList.add("opened");
+      envelope.style.pointerEvents = "none";
       setTimeout(() => {
         envelope.style.display = "none";
         letter.classList.add("visible");
         document.body.style.overflow = "auto";
       }, 800);
+    });
+
+    putBack.addEventListener("click", () => {
+      letter.classList.remove("visible");
+      letter.style.opacity = "0";
+      document.body.style.overflow = "hidden";
+      envelope.style.display = "";
+      envelope.classList.remove("opened");
+      envelope.style.pointerEvents = "";
+
+      requestAnimationFrame(() => {
+        envelope.style.opacity = "0";
+        envelope.style.transform = "scale(0.8)";
+        requestAnimationFrame(() => {
+          envelope.style.transition = "all 0.6s ease";
+          envelope.style.opacity = "1";
+          envelope.style.transform = "scale(1)";
+          letter.style.opacity = "";
+          letter.style.transition = "";
+          setTimeout(() => {
+            envelope.style.transition = "";
+            envelope.style.transform = "";
+          }, 600);
+        });
+      });
     });
   </script>
 </body>
